@@ -73,7 +73,7 @@ Alpine.store('app', {
             this.db.notes = s.notes ?? [];
             this.ready = true;
         } catch (e) {
-            this.notify('Gagal memuat data: ' + e.message, 'bad');
+            this.notify('Failed to load data: ' + e.message, 'bad');
         }
     },
 
@@ -150,11 +150,11 @@ Alpine.store('app', {
 
     // ---- aksi data (dipakai halaman member via Alpine & panel via vanilla) ----
     async addNote(title) {
-        if (!String(title).trim()) return this.notify('Judul tidak boleh kosong', 'bad');
+        if (!String(title).trim()) return this.notify('Title must not be empty', 'bad');
         try {
             const n = await api('/notes', { method: 'POST', body: { title } });
             this.db.notes.unshift(n);
-            this.notify('Catatan dibuat');
+            this.notify('Note created');
         } catch (e) {
             this.notify(e.message, 'bad');
         }

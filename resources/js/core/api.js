@@ -19,7 +19,7 @@ export async function api(path, { method = 'GET', body } = {}) {
     const json = await res.json().catch(() => ({}));
 
     if (!res.ok) {
-        const err = new Error(json.message || res.statusText || 'Terjadi kesalahan');
+        const err = new Error(json.message || res.statusText || 'Something went wrong');
         err.status = res.status;
         throw err;
     }

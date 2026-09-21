@@ -23,7 +23,7 @@ export function renderLogin(err = '') {
         <button type="button" class="c-btn c-btn-outline w-full justify-start" data-login="fill" data-e="${e}" data-p="${p}">
             <i class="ti text-base leading-none text-muted-foreground ${icon}"></i>
             <span class="font-semibold">${label}</span>
-            <span class="ml-auto truncate text-xs text-muted-foreground">${e} / ${p}</span>
+            <span class="ml-auto truncate text-base text-muted-foreground">${e} / ${p}</span>
         </button>`).join('');
 
     $('#login').innerHTML = `
@@ -32,15 +32,15 @@ export function renderLogin(err = '') {
             <div class="flex items-center gap-2 text-lg font-bold"><i class="ti ti-box text-2xl leading-none"></i>SPA Shell</div>
             <div class="space-y-2">
                 <h1 class="text-3xl font-semibold tracking-tight">Laravel + AlpineJS SPA</h1>
-                <p class="max-w-sm text-sm text-primary-foreground/70">Satu halaman shell, tiga tampilan: login (vanilla), panel (vanilla), dan member (Alpine) — pola arsitektur yang sama dengan hris-adsy.</p>
+                <p class="max-w-sm text-base text-primary-foreground/70">One shell page, three views: login (vanilla), panel (vanilla), and member (Alpine) — a minimal server-served SPA pattern.</p>
             </div>
-            <p class="text-xs text-primary-foreground/60">Design system: shadcn · Tailwind v4</p>
+            <p class="text-base text-primary-foreground/60">Design system: shadcn · Tailwind v4</p>
         </div>
         <div class="flex items-center justify-center p-6">
             <div class="w-full max-w-sm space-y-6">
                 <div class="space-y-1">
-                    <h1 class="text-2xl font-semibold tracking-tight">Masuk</h1>
-                    <p class="text-sm text-muted-foreground">Login menentukan bagian tujuan berdasarkan level pengguna.</p>
+                    <h1 class="text-2xl font-semibold tracking-tight">Sign in</h1>
+                    <p class="text-base text-muted-foreground">Signing in routes you to the matching section based on your account level.</p>
                 </div>
                 <form class="space-y-4" data-login="form">
                     <div class="space-y-1.5">
@@ -48,18 +48,18 @@ export function renderLogin(err = '') {
                         <input class="c-input" id="login-email" name="email" type="email" autocomplete="username" required>
                     </div>
                     <div class="space-y-1.5">
-                        <label class="c-label" for="login-password">Kata sandi</label>
+                        <label class="c-label" for="login-password">Password</label>
                         <div class="relative">
                             <input class="c-input pr-11" id="login-password" name="password" type="password" autocomplete="current-password" required>
-                            <button type="button" class="absolute inset-y-0 right-1 my-auto flex h-7 w-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground" data-login="pw" aria-label="Lihat kata sandi"><i class="ti ti-eye text-base leading-none"></i></button>
+                            <button type="button" class="absolute inset-y-0 right-1 my-auto flex h-7 w-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground" data-login="pw" aria-label="Show password"><i class="ti ti-eye text-base leading-none"></i></button>
                         </div>
                     </div>
-                    ${err ? `<p class="text-sm text-destructive">${err}</p>` : ''}
-                    <button class="c-btn c-btn-primary w-full" type="submit"><i class="ti ti-login"></i>Masuk</button>
+                    ${err ? `<p class="text-base text-destructive">${err}</p>` : ''}
+                    <button class="c-btn c-btn-primary w-full" type="submit"><i class="ti ti-login"></i>Sign in</button>
                 </form>
                 ${window.CFG?.demoLogin === false ? '' : `
                 <div class="space-y-2 rounded-md border bg-muted/40 p-4">
-                    <p class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Akun demo</p>
+                    <p class="text-base font-semibold uppercase tracking-wide text-muted-foreground">Demo accounts</p>
                     <div class="space-y-2">${chips}</div>
                 </div>`}
             </div>

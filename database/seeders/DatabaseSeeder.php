@@ -27,14 +27,14 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $member->notes()->createMany([
-            ['title' => 'Pelajari custom Nav router'],
-            ['title' => 'Bandinkan x-if vs Alpine.data'],
-            ['title' => 'Rapikan design tokens shadcn'],
+            ['title' => 'Study the custom Nav router'],
+            ['title' => 'Compare x-if vs Alpine.data'],
+            ['title' => 'Clean up the shadcn design tokens'],
         ]);
 
         $admin->notes()->createMany([
-            ['title' => 'Siapkan demo untuk tim'],
-            ['title' => 'Review README arsitektur'],
+            ['title' => 'Prepare the demo for the team'],
+            ['title' => 'Review the architecture README'],
         ]);
     }
 }

@@ -1,10 +1,12 @@
 @import '@tabler/icons-webfont/dist/tabler-icons.min.css';
+@import '@fontsource-variable/outfit';
 
 /* ============================================================
    Design system shadcn — diadopsi dari shadcn-admin-dashboard-free
    (https://github.com/bundui/shadcn-admin-dashboard-free) untuk Tailwind v4:
    token CSS + pemetaan ke utility color. Tema gelap via kelas .dark
    pada <html> (diatur Alpine.store('theme') & pre-paint script di shell).
+   Font global: Google Font Outfit (variabel), dibundel lokal.
    ============================================================ */
 
 @import 'tailwindcss';
@@ -37,6 +39,12 @@
     --radius-md: calc(var(--radius) - 2px);
     --radius-lg: var(--radius);
     --radius-xl: calc(var(--radius) + 4px);
+    --font-sans: "Outfit Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --color-sidebar: var(--sidebar);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
 }
 
 :root {
@@ -59,6 +67,11 @@
     --border: oklch(0.922 0 0);
     --input: oklch(0.922 0 0);
     --ring: oklch(0.708 0 0);
+    --sidebar: #f7f6f6;
+    --sidebar-foreground: #646464;
+    --sidebar-border: #e5e5e5;
+    --sidebar-accent: #e1e1e1;
+    --sidebar-accent-foreground: #000000;
 }
 
 .dark {
@@ -80,6 +93,11 @@
     --border: oklch(1 0 0 / 10%);
     --input: oklch(1 0 0 / 15%);
     --ring: oklch(0.556 0 0);
+    --sidebar: #171717;
+    --sidebar-foreground: #a1a1a1;
+    --sidebar-border: rgb(255 255 255 / 10%);
+    --sidebar-accent: #2c2c2c;
+    --sidebar-accent-foreground: #ffffff;
 }
 
 @layer base {
@@ -91,6 +109,7 @@
     }
     body {
         @apply bg-background text-foreground antialiased;
+        font-family: "Outfit Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
     }
     [x-cloak] {
         display: none !important;
@@ -105,7 +124,7 @@
 /* ------------------------------------------------------------------------ */
 @layer components {
     .c-btn {
-        @apply inline-flex h-9 shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-md px-4 py-2 text-sm font-medium outline-none transition-all focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50;
+        @apply inline-flex h-9 shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-md px-4 py-2 text-base font-medium outline-none transition-all focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50;
     }
     .c-btn-primary {
         @apply bg-primary text-primary-foreground hover:bg-primary/90;
@@ -124,22 +143,22 @@
     }
 
     .c-input {
-        @apply h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px];
+        @apply h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-xs outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px];
     }
     .c-label {
-        @apply text-sm font-medium leading-none;
+        @apply text-base font-medium leading-none;
     }
     .c-card {
         @apply rounded-lg border bg-card text-card-foreground shadow-sm;
     }
     .c-badge {
-        @apply inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-medium transition-colors;
+        @apply inline-flex items-center rounded-md border px-2.5 py-0.5 text-base font-medium transition-colors;
     }
     .c-badge-outline {
-        @apply inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-medium transition-colors text-foreground;
+        @apply inline-flex items-center rounded-md border px-2.5 py-0.5 text-base font-medium transition-colors text-foreground;
     }
     .c-badge-secondary {
-        @apply inline-flex items-center rounded-md border border-transparent bg-secondary px-2.5 py-0.5 text-xs font-medium transition-colors text-secondary-foreground;
+        @apply inline-flex items-center rounded-md border border-transparent bg-secondary px-2.5 py-0.5 text-base font-medium transition-colors text-secondary-foreground;
     }
 }
 

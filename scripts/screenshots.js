@@ -64,13 +64,13 @@ async function run() {
     console.log('ok 02-panel-dashboard.png');
 
     await page.click('a[href="#/panel/notes"]');
-    await page.waitForSelector('#panel h1:has-text("Catatan")');
+    await page.waitForSelector('#panel h1:has-text("Notes")');
     await page.waitForTimeout(600);
     await shot(page, '03-panel-notes.png');
     console.log('ok 03-panel-notes.png');
 
     await page.click('a[href="#/panel/profile"]');
-    await page.waitForSelector('#panel h1:has-text("Profil")');
+    await page.waitForSelector('#panel h1:has-text("Profile")');
     await page.waitForTimeout(600);
     await shot(page, '04-panel-profile.png');
     console.log('ok 04-panel-profile.png');
