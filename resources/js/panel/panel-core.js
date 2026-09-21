@@ -18,37 +18,40 @@ const ui = { page: 'dashboard', params: [] };
 
 // item navigasi sidebar + topbar (mobile)
 const NAV = [
-    ['dashboard', 'Ringkasan', '#/panel/'],
-    ['notes', 'Catatan', '#/panel/notes'],
-    ['profile', 'Profil', '#/panel/profile'],
+    ['dashboard', 'Ringkasan', '#/panel/', 'ti-layout-dashboard'],
+    ['notes', 'Catatan', '#/panel/notes', 'ti-notebook'],
+    ['profile', 'Profil', '#/panel/profile', 'ti-user'],
 ];
 
 function sidebar() {
-    const items = NAV.map(([key, label, href]) => {
+    const items = NAV.map(([key, label, href, icon]) => {
         const active = ui.page === key;
-        return `<a href="${href}" class="flex items-center rounded-md px-3 py-2 text-sm font-medium transition-colors ${
+        return `<a href="${href}" class="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
             active ? 'bg-accent text-accent-foreground' : 'text-muted-foreground hover:bg-accent/60 hover:text-accent-foreground'
-        }">${label}</a>`;
+        }"><i class="ti text-base leading-none ${icon}"></i>${label}</a>`;
     }).join('');
 
     return `
     <aside class="hidden min-h-screen flex-col gap-1 border-r bg-card p-4 lg:flex">
-        <div class="px-2 py-3">
-            <div class="text-sm font-bold">SPA Shell</div>
-            <div class="text-xs text-muted-foreground">panel · vanilla</div>
+        <div class="flex items-center gap-2 px-2 py-3">
+            <i class="ti ti-box text-xl leading-none"></i>
+            <div>
+                <div class="text-sm font-bold">SPA Shell</div>
+                <div class="text-xs text-muted-foreground">panel · vanilla</div>
+            </div>
         </div>
         ${items}
         <div class="mt-auto space-y-1">
-            <a href="#/member/" class="flex items-center rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent/60 hover:text-accent-foreground">Member (Alpine)</a>
-            <button type="button" class="c-btn c-btn-ghost w-full justify-start" data-action="logout">Keluar</button>
+            <a href="#/member/" class="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent/60 hover:text-accent-foreground"><i class="ti ti-sparkles text-base leading-none"></i>Member (Alpine)</a>
+            <button type="button" class="c-btn c-btn-ghost w-full justify-start" data-action="logout"><i class="ti ti-logout text-base leading-none"></i>Keluar</button>
         </div>
     </aside>
     <div class="flex h-14 items-center justify-between border-b bg-card px-4 lg:hidden">
-        <span class="text-sm font-bold">SPA Shell</span>
+        <span class="flex items-center gap-2 text-sm font-bold"><i class="ti ti-box text-lg leading-none"></i>SPA Shell</span>
         <nav class="flex items-center gap-1 text-xs">
-            ${NAV.map(([key, label, href]) => `
-                <a href="${href}" class="rounded-md px-2 py-1.5 font-medium transition-colors ${ui.page === key ? 'bg-accent text-accent-foreground' : 'text-muted-foreground'}">${label}</a>`).join('')}
-            <button type="button" class="rounded-md px-2 py-1.5 font-medium text-muted-foreground transition-colors hover:bg-accent/60" data-action="logout" aria-label="Keluar">keluar</button>
+            ${NAV.map(([key, label, href, icon]) => `
+                <a href="${href}" class="flex items-center gap-1 rounded-md px-2 py-1.5 font-medium transition-colors ${ui.page === key ? 'bg-accent text-accent-foreground' : 'text-muted-foreground'}"><i class="ti ${icon}"></i>${label}</a>`).join('')}
+            <button type="button" class="rounded-md px-2 py-1.5 font-medium text-muted-foreground transition-colors hover:bg-accent/60" data-action="logout" aria-label="Keluar"><i class="ti ti-logout"></i></button>
         </nav>
     </div>`;
 }

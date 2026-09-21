@@ -14,13 +14,14 @@ import { Nav } from './core/nav.js';
 const $ = (s) => document.querySelector(s);
 
 const DEMO = [
-    ['Admin', 'admin@example.com', 'password'],
-    ['Member', 'member@example.com', 'password'],
+    ['Admin', 'admin@example.com', 'password', 'ti-user-cog'],
+    ['Member', 'member@example.com', 'password', 'ti-user'],
 ];
 
 export function renderLogin(err = '') {
-    const chips = DEMO.map(([label, e, p]) => `
+    const chips = DEMO.map(([label, e, p, icon]) => `
         <button type="button" class="c-btn c-btn-outline w-full justify-start" data-login="fill" data-e="${e}" data-p="${p}">
+            <i class="ti text-base leading-none text-muted-foreground ${icon}"></i>
             <span class="font-semibold">${label}</span>
             <span class="ml-auto truncate text-xs text-muted-foreground">${e} / ${p}</span>
         </button>`).join('');
@@ -28,7 +29,7 @@ export function renderLogin(err = '') {
     $('#login').innerHTML = `
     <div class="grid min-h-screen lg:grid-cols-2">
         <div class="relative hidden overflow-hidden bg-primary p-10 text-primary-foreground lg:flex lg:flex-col lg:justify-between">
-            <div class="text-lg font-bold">SPA Shell</div>
+            <div class="flex items-center gap-2 text-lg font-bold"><i class="ti ti-box text-2xl leading-none"></i>SPA Shell</div>
             <div class="space-y-2">
                 <h1 class="text-3xl font-semibold tracking-tight">Laravel + AlpineJS SPA</h1>
                 <p class="max-w-sm text-sm text-primary-foreground/70">Satu halaman shell, tiga tampilan: login (vanilla), panel (vanilla), dan member (Alpine) — pola arsitektur yang sama dengan hris-adsy.</p>
@@ -49,12 +50,12 @@ export function renderLogin(err = '') {
                     <div class="space-y-1.5">
                         <label class="c-label" for="login-password">Kata sandi</label>
                         <div class="relative">
-                            <input class="c-input pr-16" id="login-password" name="password" type="password" autocomplete="current-password" required>
-                            <button type="button" class="absolute inset-y-0 right-1.5 my-auto h-7 rounded px-2 text-xs font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground" data-login="pw">lihat</button>
+                            <input class="c-input pr-11" id="login-password" name="password" type="password" autocomplete="current-password" required>
+                            <button type="button" class="absolute inset-y-0 right-1 my-auto flex h-7 w-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground" data-login="pw" aria-label="Lihat kata sandi"><i class="ti ti-eye text-base leading-none"></i></button>
                         </div>
                     </div>
                     ${err ? `<p class="text-sm text-destructive">${err}</p>` : ''}
-                    <button class="c-btn c-btn-primary w-full" type="submit">Masuk</button>
+                    <button class="c-btn c-btn-primary w-full" type="submit"><i class="ti ti-login"></i>Masuk</button>
                 </form>
                 ${window.CFG?.demoLogin === false ? '' : `
                 <div class="space-y-2 rounded-md border bg-muted/40 p-4">
@@ -81,7 +82,7 @@ document.addEventListener('click', (e) => {
         const i = $('#login form [name="password"]');
         const show = i.type === 'password';
         i.type = show ? 'text' : 'password';
-        el.textContent = show ? 'sembunyi' : 'lihat';
+        el.querySelector('i').className = `ti text-base leading-none ${show ? 'ti-eye-off' : 'ti-eye'}`;
     }
 });
 

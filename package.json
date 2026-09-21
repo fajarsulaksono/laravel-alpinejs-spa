@@ -12,6 +12,7 @@
         "vite": "^7.0.7"
     },
     "dependencies": {
+        "@tabler/icons-webfont": "^3.47.0",
         "alpinejs": "^3.15.0"
     }
 }

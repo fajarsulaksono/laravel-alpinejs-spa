@@ -32,12 +32,14 @@ const head = (title, sub) => `
             <h1 class="text-sm font-semibold">${title}</h1>
             <p class="hidden text-xs text-muted-foreground sm:block">${sub}</p>
         </div>
-        <button type="button" class="c-btn c-btn-ghost c-btn-sm" data-action="theme">Tema</button>
+        <button type="button" class="c-btn c-btn-ghost c-btn-sm" data-action="theme"><i class="ti ti-moon text-base leading-none"></i>Tema</button>
     </header>`;
 
-const stat = (label, value) => `
+const stat = (label, value, icon) => `
     <div class="c-card rounded-lg bg-gradient-to-t from-primary/5 to-card p-5 shadow-xs">
-        <p class="text-sm text-muted-foreground">${label}</p>
+        <p class="flex items-center justify-between text-sm text-muted-foreground">
+            <span>${label}</span><i class="ti text-lg leading-none text-muted-foreground/70 ${icon}"></i>
+        </p>
         <p class="mt-1 text-3xl font-semibold tabular-nums">${value}</p>
     </div>`;
 
@@ -56,9 +58,9 @@ Panel.pages.dashboard = () => {
         <main class="max-w-5xl space-y-6 p-4 lg:p-8">
             <p class="text-sm text-muted-foreground">Halo, <b class="text-foreground">${esc(st.user.name)}</b> · level <code>${esc(st.user.level)}</code>. Pengguna berlevel <code>admin</code> selalu mendarat di bagian ini.</p>
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                ${stat('Total catatan', total)}
-                ${stat('Selesai', done)}
-                ${stat('Terbuka', total - done)}
+                ${stat('Total catatan', total, 'ti-notes')}
+                ${stat('Selesai', done, 'ti-check')}
+                ${stat('Terbuka', total - done, 'ti-circle-dashed')}
             </div>
         </main>`;
 };
@@ -71,11 +73,11 @@ Panel.pages.notes = () => {
             (n) => `
             <tr class="border-b last:border-0 hover:bg-muted/30">
                 <td class="p-3 align-middle text-sm font-medium ${n.done ? 'text-muted-foreground line-through' : ''}">${esc(n.title)}</td>
-                <td class="p-3 align-middle">${n.done ? '<span class="c-badge-outline">Selesai</span>' : '<span class="c-badge-secondary">Terbuka</span>'}</td>
+                <td class="p-3 align-middle">${n.done ? '<span class="c-badge-outline gap-1"><i class="ti ti-check"></i>Selesai</span>' : '<span class="c-badge-secondary gap-1"><i class="ti ti-circle-dashed"></i>Terbuka</span>'}</td>
                 <td class="p-3 align-middle">
                     <div class="flex justify-end gap-2">
-                        <button class="c-btn c-btn-outline c-btn-sm" data-action="toggle" data-id="${n.id}">${n.done ? 'Buka lagi' : 'Tandai'}</button>
-                        <button class="c-btn c-btn-destructive c-btn-sm" data-action="delete-note" data-id="${n.id}">Hapus</button>
+                        <button class="c-btn c-btn-outline c-btn-sm" data-action="toggle" data-id="${n.id}">${n.done ? '<i class="ti ti-arrow-back-up text-sm leading-none"></i>Buka lagi' : '<i class="ti ti-check text-sm leading-none"></i>Tandai'}</button>
+                        <button class="c-btn c-btn-destructive c-btn-sm" data-action="delete-note" data-id="${n.id}"><i class="ti ti-trash text-sm leading-none"></i>Hapus</button>
                     </div>
                 </td>
             </tr>`
@@ -118,15 +120,15 @@ Panel.pages.profile = () => {
                 </div>
                 <dl class="divide-y border-t">
                     <div class="flex justify-between py-2.5 text-sm">
-                        <dt class="text-muted-foreground">Level</dt>
+                        <dt class="flex items-center gap-1.5 text-muted-foreground"><i class="ti ti-shield text-base leading-none"></i>Level</dt>
                         <dd class="font-medium">${esc(u.level)}</dd>
                     </div>
                     <div class="flex justify-between py-2.5 text-sm">
-                        <dt class="text-muted-foreground">Bagian SPA</dt>
+                        <dt class="flex items-center gap-1.5 text-muted-foreground"><i class="ti ti-bolt text-base leading-none"></i>Bagian SPA</dt>
                         <dd class="font-medium">panel · vanilla</dd>
                     </div>
                 </dl>
-                <button class="c-btn c-btn-destructive w-full" data-action="logout">Keluar</button>
+                <button class="c-btn c-btn-destructive w-full" data-action="logout"><i class="ti ti-logout text-base leading-none"></i>Keluar</button>
             </div>
         </main>`;
 };

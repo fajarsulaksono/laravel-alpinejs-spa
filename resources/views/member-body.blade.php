@@ -27,7 +27,9 @@
                 <div class="flex items-center gap-2">
                     <span class="text-xs text-muted-foreground">AlpineJS</span>
                     <button type="button" class="c-btn c-btn-ghost c-btn-sm" @click="$store.theme.toggle()"
-                            x-text="$store.theme.isDark ? '☀' : '☾'"></button>
+                            :aria-label="$store.theme.isDark ? 'Mode terang' : 'Mode gelap'">
+                        <i class="ti text-base leading-none" :class="$store.theme.isDark ? 'ti-sun' : 'ti-moon'"></i>
+                    </button>
                 </div>
             </header>
             <div class="mx-auto max-w-md space-y-6 px-4 py-6">
@@ -40,14 +42,18 @@
                     <button type="button"
                             class="c-card rounded-lg bg-gradient-to-t from-primary/5 to-card p-4 text-left shadow-xs transition-colors hover:border-ring/50"
                             @click="openNotes()">
-                        <p class="text-sm text-muted-foreground">Catatan</p>
+                        <p class="flex items-center justify-between text-sm text-muted-foreground">
+                            <span>Catatan</span><i class="ti ti-notebook text-base leading-none text-muted-foreground/70"></i>
+                        </p>
                         <p class="mt-1 text-2xl font-semibold tabular-nums" x-text="db.notes.length"></p>
                         <p class="mt-2 text-xs text-muted-foreground">total</p>
                     </button>
                     <button type="button"
                             class="c-card rounded-lg bg-gradient-to-t from-primary/5 to-card p-4 text-left shadow-xs transition-colors hover:border-ring/50"
                             @click="openNotes()">
-                        <p class="text-sm text-muted-foreground">Selesai</p>
+                        <p class="flex items-center justify-between text-sm text-muted-foreground">
+                            <span>Selesai</span><i class="ti ti-check text-base leading-none text-muted-foreground/70"></i>
+                        </p>
                         <p class="mt-1 text-2xl font-semibold tabular-nums" x-text="doneCount"></p>
                         <p class="mt-2 text-xs text-muted-foreground">dari total</p>
                     </button>
@@ -66,7 +72,7 @@
             <div class="mx-auto max-w-md space-y-4 px-4 py-6">
                 <form class="flex gap-2" @submit.prevent="add()">
                     <input class="c-input min-w-0 flex-1" type="text" x-model="title" placeholder="Tulis catatan baru…" required>
-                    <button class="c-btn c-btn-primary" type="submit">Tambah</button>
+                    <button class="c-btn c-btn-primary" type="submit"><i class="ti ti-plus"></i>Tambah</button>
                 </form>
                 <ul class="space-y-2">
                     <template x-for="n in list" :key="n.id">
@@ -74,8 +80,10 @@
                             <button type="button"
                                     class="flex size-5 shrink-0 items-center justify-center rounded-full border text-xs transition-colors"
                                     :class="n.done ? 'border-primary bg-primary text-primary-foreground' : 'border-input'"
-                                    @click="toggle(n)" x-text="n.done ? '✓' : ''"
-                                    :aria-pressed="n.done ? 'true' : 'false'"></button>
+                                    @click="toggle(n)"
+                                    :aria-pressed="n.done ? 'true' : 'false'">
+                                <i class="ti ti-check text-xs leading-none" x-show="n.done"></i>
+                            </button>
                             <div class="min-w-0 flex-1">
                                 <p class="truncate text-sm font-medium"
                                    :class="n.done ? 'text-muted-foreground line-through' : ''"
@@ -109,7 +117,9 @@
                 </div>
                 <p class="text-sm text-muted-foreground">Navigasi bawah dirender dengan <code>x-for</code>; tautannya
                     memakai <code>#/member/…</code> yang diterjemahkan Nav menjadi URL bersih.</p>
-                <button class="c-btn c-btn-destructive w-full" type="button" @click="logout()">Keluar</button>
+                <button class="c-btn c-btn-destructive w-full" type="button" @click="logout()">
+                    <i class="ti ti-logout"></i>Keluar
+                </button>
             </div>
         </main>
     </template>
@@ -117,11 +127,15 @@
     <!-- Navigasi bawah: x-for + kondisi aktif berdasarkan $store.app.route.name -->
     <nav class="fixed inset-x-0 bottom-0 border-t bg-card/95 backdrop-blur">
         <div class="mx-auto grid max-w-md grid-cols-3">
-            <template x-for="tab in [['home', 'Beranda'], ['notes', 'Catatan'], ['profile', 'Profil']]" :key="tab[0]">
+            <template x-for="tab in [
+                    ['home', 'Beranda', 'ti-home'],
+                    ['notes', 'Catatan', 'ti-notebook'],
+                    ['profile', 'Profil', 'ti-user'],
+                ]" :key="tab[0]">
                 <a :href="'#/member/' + (tab[0] === 'home' ? '' : tab[0])"
                    class="flex flex-col items-center gap-0.5 py-2.5 text-xs font-medium transition-colors"
                    :class="$store.app.route.name === tab[0] ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'">
-                    <span x-text="tab[0] === 'home' ? '◎' : tab[0] === 'notes' ? '≡' : '✕'"></span>
+                    <i class="ti text-base leading-none" :class="tab[2]"></i>
                     <span x-text="tab[1]"></span>
                 </a>
             </template>

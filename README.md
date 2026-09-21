@@ -93,7 +93,9 @@ resources/css/app.css              shadcn tokens (Tailwind v4), .dark, .c-*
 **shadcn**-style design system (Tailwind v4): `oklch` color tokens in
 `:root` / `.dark`, dark mode via the `.dark` class on `<html>` (pre-paint
 script in the shell + `Alpine.store('theme')`), plus a few compact
-component classes (`.c-btn`, `.c-input`, `.c-card`, `.c-badge*`).
+component classes (`.c-btn`, `.c-input`, `.c-card`, `.c-badge*`). Icons use
+the **Tabler Icons** webfont (`<i class="ti ti-*">`), bundled locally via
+Vite (`@tabler/icons-webfont`).
 
 ## Tests
 
