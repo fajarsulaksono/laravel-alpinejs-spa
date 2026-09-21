@@ -24,6 +24,14 @@ const NAV = [
     ['profile', 'Profile', '#/panel/profile', 'ti-user'],
 ];
 
+// Logo mark: SVG cube filled (webfont Tabler tidak menyediakan ikon filled).
+const logoMark = (cls = 'size-[1.4rem]') => `
+    <svg viewBox="0 0 24 24" fill="currentColor" class="${cls}" aria-hidden="true">
+        <path d="M12 2.1 20.9 6.7 12 11.3 3.1 6.7z" opacity=".5"/>
+        <path d="M3.1 6.7 12 11.3v10.6L3.1 17.3z"/>
+        <path d="M20.9 6.7 12 11.3v10.6l8.9-4.6z" opacity=".78"/>
+    </svg>`;
+
 function sidebar() {
     const c = ui.collapsed;
     const item = (key, label, href, icon) => {
@@ -32,24 +40,24 @@ function sidebar() {
             c ? 'h-10 w-10 justify-center' : 'w-full gap-2.5 px-3 py-2'
         } ${active ? 'bg-sidebar-accent text-sidebar-accent-foreground' : 'text-sidebar-foreground hover:bg-sidebar-accent/75 hover:text-sidebar-accent-foreground'}`;
         return `<a href="${href}" title="${c ? label : ''}" aria-label="${c ? label : ''}" class="${cls}">
-            <i class="ti text-base leading-none ${icon}"></i>${c ? '' : label}</a>`;
+            <i class="ti text-[1.4rem] leading-none ${icon}"></i>${c ? '' : label}</a>`;
     };
 
     return `
     <aside class="hidden shrink-0 flex-col bg-sidebar p-3 text-sidebar-foreground lg:sticky lg:top-0 lg:flex lg:h-svh ${c ? 'w-16 items-center gap-1' : 'w-60 gap-1'}">
         <div class="flex items-center gap-2 ${c ? 'justify-center py-2' : 'px-2 py-2.5'}">
-            <i class="ti ti-box text-xl leading-none"></i>
+            ${logoMark()}
             ${c ? '' : '<div><div class="text-base font-bold">SPA Shell</div><div class="text-base text-sidebar-foreground/70">panel · vanilla</div></div>'}
         </div>
         ${NAV.map(([k, l, h, i]) => item(k, l, h, i)).join('')}
         <div class="mt-auto flex flex-col gap-1">
             ${item('member', 'Member (Alpine)', '#/member/', 'ti-sparkles')}
             <button type="button" title="Log out" aria-label="Log out"
-                    class="flex items-center rounded-md text-base font-medium text-sidebar-foreground transition-colors hover:bg-sidebar-accent/75 hover:text-sidebar-accent-foreground ${c ? 'size-10 w-10 justify-center' : 'w-full gap-2.5 px-3 py-2'} " data-action="logout"><i class="ti ti-logout text-base leading-none"></i>${c ? '' : 'Log out'}</button>
+                    class="flex items-center rounded-md text-base font-medium text-sidebar-foreground transition-colors hover:bg-sidebar-accent/75 hover:text-sidebar-accent-foreground ${c ? 'size-10 w-10 justify-center' : 'w-full gap-2.5 px-3 py-2'} " data-action="logout"><i class="ti ti-logout text-[1.4rem] leading-none"></i>${c ? '' : 'Log out'}</button>
         </div>
     </aside>
     <div class="flex h-14 items-center justify-between px-4 text-sidebar-foreground lg:hidden">
-        <span class="flex items-center gap-2 text-base font-bold"><i class="ti ti-box text-lg leading-none"></i>SPA Shell</span>
+        <span class="flex items-center gap-2 text-base font-bold">${logoMark()}SPA Shell</span>
         <nav class="flex items-center gap-1 text-base">
             ${NAV.map(([key, label, href, icon]) => `
                 <a href="${href}" class="flex items-center gap-1 rounded-md px-2 py-1.5 font-medium transition-colors ${ui.page === key ? 'bg-sidebar-accent text-sidebar-accent-foreground' : 'text-sidebar-foreground'}"><i class="ti ${icon}"></i>${label}</a>`).join('')}
@@ -63,14 +71,17 @@ const header = (title, sub) => `
         <div class="flex min-w-0 items-center gap-3">
             <button type="button" title="Expand / collapse sidebar" aria-label="Expand / collapse sidebar"
                     class="hidden c-btn c-btn-ghost c-btn-sm px-2 lg:inline-flex" data-action="sidebar">
-                <i class="ti text-lg leading-none ${Panel.collapsed ? 'ti-layout-sidebar-left-expand' : 'ti-layout-sidebar-left-collapse'}"></i>
+                <i class="ti text-[1.4rem] leading-none ${Panel.collapsed ? 'ti-layout-sidebar-left-expand' : 'ti-layout-sidebar-left-collapse'}"></i>
             </button>
             <div class="min-w-0">
                 <h1 class="truncate text-base font-semibold">${title}</h1>
                 <p class="hidden truncate text-base text-muted-foreground sm:block">${sub}</p>
             </div>
         </div>
-        <button type="button" class="c-btn c-btn-ghost c-btn-sm" data-action="theme"><i class="ti ti-moon text-base leading-none"></i>Theme</button>
+        <button type="button" data-action="theme" title="Toggle theme" aria-label="Toggle theme" class="c-btn c-btn-ghost c-btn-sm px-2">
+            <i class="ti ti-sun text-[1.4rem] leading-none dark:hidden"></i>
+            <i class="ti ti-moon hidden text-[1.4rem] leading-none dark:block"></i>
+        </button>
     </header>`;
 
 export const Panel = {

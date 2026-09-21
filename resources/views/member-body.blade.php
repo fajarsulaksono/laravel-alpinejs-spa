@@ -28,7 +28,7 @@
                     <span class="text-base text-muted-foreground">AlpineJS</span>
                     <button type="button" class="c-btn c-btn-ghost c-btn-sm" @click="$store.theme.toggle()"
                             :aria-label="$store.theme.isDark ? 'Light mode' : 'Dark mode'">
-                        <i class="ti text-base leading-none" :class="$store.theme.isDark ? 'ti-sun' : 'ti-moon'"></i>
+                        <i class="ti text-[1.4rem] leading-none" :class="$store.theme.isDark ? 'ti-sun' : 'ti-moon'"></i>
                     </button>
                 </div>
             </header>
