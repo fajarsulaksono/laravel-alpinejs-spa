@@ -35,6 +35,27 @@ Open <http://127.0.0.1:8000>.
 | `admin@example.com` | `password` | `admin` | `#/panel/` (vanilla) |
 | `member@example.com` | `password` | `member` | `#/member/` (Alpine) |
 
+## Screenshots
+
+*Login → Panel (admin, vanilla JS):*
+
+| | |
+| --- | --- |
+| ![Login](docs/screenshots/01-login.png) | ![Panel — Dashboard](docs/screenshots/02-panel-dashboard.png) |
+| ![Panel — Notes](docs/screenshots/03-panel-notes.png) | ![Panel — Profile](docs/screenshots/04-panel-profile.png) |
+| ![Panel — Sidebar collapsed](docs/screenshots/05-panel-sidebar-collapsed.png) | ![Panel — Dark mode](docs/screenshots/06-panel-sidebar-dark.png) |
+
+*Member (AlpineJS):*
+
+| | |
+| --- | --- |
+| ![Member — Home](docs/screenshots/07-member-home.png) | ![Member — Notes](docs/screenshots/08-member-notes.png) |
+| ![Member — Profile](docs/screenshots/09-member-profile.png) | |
+| | |
+
+Screenshot dihasilkan dengan `npm run screenshots` (Playwright + headless
+Chrome, lihat `scripts/screenshots.js`).
+
 ## Routing flow
 
 1. The browser requests any URL → Laravel returns the **same shell**
