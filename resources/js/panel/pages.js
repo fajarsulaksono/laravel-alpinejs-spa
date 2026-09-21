@@ -28,9 +28,15 @@ const initials = (name) =>
 
 const head = (title, sub) => `
     <header class="flex h-14 items-center justify-between border-b bg-background/95 px-4 backdrop-blur lg:px-8">
-        <div>
-            <h1 class="text-sm font-semibold">${title}</h1>
-            <p class="hidden text-xs text-muted-foreground sm:block">${sub}</p>
+        <div class="flex min-w-0 items-center gap-3">
+            <button type="button" title="Bentang / ciutkan sidebar" aria-label="Bentang / ciutkan sidebar"
+                    class="hidden c-btn c-btn-ghost c-btn-sm px-2 lg:inline-flex" data-action="sidebar">
+                <i class="ti text-lg leading-none ${Panel.collapsed ? 'ti-layout-sidebar-left-expand' : 'ti-layout-sidebar-left-collapse'}"></i>
+            </button>
+            <div class="min-w-0">
+                <h1 class="truncate text-sm font-semibold">${title}</h1>
+                <p class="hidden truncate text-xs text-muted-foreground sm:block">${sub}</p>
+            </div>
         </div>
         <button type="button" class="c-btn c-btn-ghost c-btn-sm" data-action="theme"><i class="ti ti-moon text-base leading-none"></i>Tema</button>
     </header>`;
@@ -55,7 +61,7 @@ Panel.pages.dashboard = () => {
 
     return `
         ${head('Ringkasan', 'Halaman dirender dari fungsi JS vanilla, tanpa Alpine')}
-        <main class="max-w-5xl space-y-6 p-4 lg:p-8">
+        <main class="page-enter max-w-5xl space-y-6 p-4 lg:p-8">
             <p class="text-sm text-muted-foreground">Halo, <b class="text-foreground">${esc(st.user.name)}</b> · level <code>${esc(st.user.level)}</code>. Pengguna berlevel <code>admin</code> selalu mendarat di bagian ini.</p>
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
                 ${stat('Total catatan', total, 'ti-notes')}
@@ -86,7 +92,7 @@ Panel.pages.notes = () => {
 
     return `
         ${head('Catatan', 'Data dibaca dari store yang sama dengan bagian member')}
-        <main class="max-w-5xl p-4 lg:p-8">
+        <main class="page-enter max-w-5xl p-4 lg:p-8">
             <div class="c-card overflow-hidden shadow-xs">
                 <table class="w-full caption-bottom text-sm">
                     <thead>
@@ -109,7 +115,7 @@ Panel.pages.profile = () => {
 
     return `
         ${head('Profil', 'Contoh halaman dengan kartu & avatar')}
-        <main class="max-w-5xl p-4 lg:p-8">
+        <main class="page-enter max-w-5xl p-4 lg:p-8">
             <div class="c-card max-w-md space-y-4 rounded-lg p-5 shadow-xs">
                 <div class="flex items-center gap-3">
                     <div class="flex size-11 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-foreground">${initials(u.name)}</div>
@@ -151,4 +157,9 @@ Panel.actions.logout = () => {
 
 Panel.actions.theme = () => {
     Alpine.store('theme').toggle();
+};
+
+Panel.actions.sidebar = () => {
+    Panel.toggleSidebar();
+    Panel.render();
 };

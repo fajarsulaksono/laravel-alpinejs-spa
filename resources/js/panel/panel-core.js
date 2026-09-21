@@ -14,7 +14,8 @@ import { Nav } from '../core/nav.js';
 
 const $ = (s) => document.querySelector(s);
 
-const ui = { page: 'dashboard', params: [] };
+const SIDEBAR_KEY = 'sample.panel.sidebar';
+const ui = { page: 'dashboard', params: [], collapsed: localStorage.getItem(SIDEBAR_KEY) === '1' };
 
 // item navigasi sidebar + topbar (mobile)
 const NAV = [
@@ -24,26 +25,28 @@ const NAV = [
 ];
 
 function sidebar() {
-    const items = NAV.map(([key, label, href, icon]) => {
+    const c = ui.collapsed;
+    const item = (key, label, href, icon) => {
         const active = ui.page === key;
-        return `<a href="${href}" class="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
-            active ? 'bg-accent text-accent-foreground' : 'text-muted-foreground hover:bg-accent/60 hover:text-accent-foreground'
-        }"><i class="ti text-base leading-none ${icon}"></i>${label}</a>`;
-    }).join('');
+        const cls = `flex items-center rounded-md text-sm font-medium transition-colors ${
+            c ? 'h-9 w-9 justify-center' : 'w-full gap-2 px-3 py-2'
+        } ${active ? 'bg-accent text-accent-foreground' : 'text-muted-foreground hover:bg-accent/60 hover:text-accent-foreground'}`;
+        return `<a href="${href}" title="${c ? label : ''}" aria-label="${c ? label : ''}" class="${cls}">
+            <i class="ti text-base leading-none ${icon}"></i>${c ? '' : label}</a>`;
+    };
 
     return `
-    <aside class="hidden min-h-screen flex-col gap-1 border-r bg-card p-4 lg:flex">
-        <div class="flex items-center gap-2 px-2 py-3">
+    <aside class="hidden min-h-screen flex-col gap-1 border-r bg-card py-4 lg:flex ${c ? 'items-center px-2' : 'items-stretch px-4'}">
+        <div class="flex items-center gap-2 py-3 ${c ? 'justify-center' : 'px-2'}">
             <i class="ti ti-box text-xl leading-none"></i>
-            <div>
-                <div class="text-sm font-bold">SPA Shell</div>
-                <div class="text-xs text-muted-foreground">panel · vanilla</div>
-            </div>
+            ${c ? '' : '<div><div class="text-sm font-bold">SPA Shell</div><div class="text-xs text-muted-foreground">panel · vanilla</div></div>'}
         </div>
-        ${items}
+        ${NAV.map(([k, l, h, i]) => item(k, l, h, i)).join('')}
         <div class="mt-auto space-y-1">
-            <a href="#/member/" class="flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent/60 hover:text-accent-foreground"><i class="ti ti-sparkles text-base leading-none"></i>Member (Alpine)</a>
-            <button type="button" class="c-btn c-btn-ghost w-full justify-start" data-action="logout"><i class="ti ti-logout text-base leading-none"></i>Keluar</button>
+            ${item('member', 'Member (Alpine)', '#/member/', 'ti-sparkles')}
+            <button type="button" title="Keluar" aria-label="Keluar" class="c-btn c-btn-ghost ${
+                c ? 'h-9 w-9 justify-center px-0' : 'w-full justify-start'
+            }" data-action="logout"><i class="ti ti-logout text-base leading-none"></i>${c ? '' : 'Keluar'}</button>
         </div>
     </aside>
     <div class="flex h-14 items-center justify-between border-b bg-card px-4 lg:hidden">
@@ -74,7 +77,8 @@ export const Panel = {
         ui.page = page;
         try {
             const content = Panel.pages[page]();
-            $('#panel').innerHTML = `<div class="min-h-screen page-enter lg:grid lg:grid-cols-[240px_1fr]">${sidebar()}${content}</div>`;
+            const grid = ui.collapsed ? 'lg:grid-cols-[64px_1fr]' : 'lg:grid-cols-[240px_1fr]';
+            $('#panel').innerHTML = `<div class="min-h-screen lg:grid ${grid}">${sidebar()}${content}</div>`;
         } catch (e) {
             $('#panel').innerHTML = `<div class="p-6"><p class="text-sm text-destructive">${e.message}</p></div>`;
             console.error(e);
@@ -84,6 +88,15 @@ export const Panel = {
 
     state() {
         return Alpine.store('app');
+    },
+
+    get collapsed() {
+        return ui.collapsed;
+    },
+
+    toggleSidebar() {
+        ui.collapsed = !ui.collapsed;
+        localStorage.setItem(SIDEBAR_KEY, ui.collapsed ? '1' : '0');
     },
 };
 
